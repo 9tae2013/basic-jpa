@@ -8,7 +8,7 @@ spring:
       hibernate.jdbc.lob.non_contextual_creation: true
     show-sql: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/dbname_local
+    url: jdbc:postgresql://localhost:5432/eagle_eye_local
     username: postgres
     password: p0stgr@s
     initialization-mode: always
