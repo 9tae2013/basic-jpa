@@ -1,0 +1,48 @@
+package com.domain.basicjpa.order;
+
+import com.domain.basicjpa.customer.CustomerRepository;
+import com.domain.basicjpa.customer.PaymentService;
+import com.domain.basicjpa.model.Customer;
+import com.domain.basicjpa.model.OrderProduct;
+import com.domain.basicjpa.model.Product;
+import com.domain.basicjpa.product.StockService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+
+@Service
+@Transactional
+public class OrderService {
+    protected transient Log logger = LogFactory.getLog(getClass());
+
+    @Autowired
+    CustomerRepository customerRepository;
+    @Autowired
+    OrderRepository orderRepository;
+
+    @Autowired
+    PaymentService paymentService;
+    @Autowired
+    StockService stockService;
+
+    public OrderProduct orderProduct(String customerName, Long productId, int amount) {
+        Product product = stockService.getRemainProduct(productId, amount);
+
+        // payment
+        double total = product.getPrice() * amount;
+        paymentService.payment(customerName, total);
+
+        // order
+        Customer customer = customerRepository.getOne(customerName);
+        OrderProduct orderProduct = new OrderProduct(amount, total, customer, product);
+        orderRepository.save(orderProduct);
+
+        // ship
+        stockService.reduceStock(productId, amount);
+
+        return orderProduct;
+    }
+}

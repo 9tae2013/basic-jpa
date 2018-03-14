@@ -1,0 +1,22 @@
+spring:
+  jpa:
+    database: postgresql
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate.format_sql: true
+      hibernate.jdbc.lob.non_contextual_creation: true
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dbname_local
+    username: postgres
+    password: p0stgr@s
+    initialization-mode: always
+    hikari:
+      connection-test-query: SELECT 1
+      minimum-idle: 1
+      maximum-pool-size: 5
+
+logging:
+  level:
+    com.domain.basicjpa: DEBUG
