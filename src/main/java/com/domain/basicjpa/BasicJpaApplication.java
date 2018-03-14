@@ -2,13 +2,12 @@ package com.domain.basicjpa;
 
 import com.domain.basicjpa.customer.CustomerRepository;
 import com.domain.basicjpa.model.Customer;
-import com.domain.basicjpa.model.OrderProduct;
 import com.domain.basicjpa.model.Product;
 import com.domain.basicjpa.order.OrderRepository;
 import com.domain.basicjpa.order.OrderService;
 import com.domain.basicjpa.product.ProductRepository;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,7 +19,7 @@ import java.util.List;
 
 @SpringBootApplication
 public class BasicJpaApplication {
-    protected transient Log logger = LogFactory.getLog(getClass());
+    protected transient Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     CustomerRepository customerRepository;
